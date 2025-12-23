@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import API_URL from "../config"; // adjust path
+import API_URL from "config"; // adjust path
 
 const AddBorrower = ({ onBorrowerAdded }) => {
   const [formData, setFormData] = useState({

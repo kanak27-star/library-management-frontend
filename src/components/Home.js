@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import API_URL from "../config"; // adjust path
+import API_URL from "config"; // adjust path
 
 const Home = ({
   showBooks,
@@ -24,29 +24,23 @@ const Home = ({
       try {
         // Use Vite environment variable
         const apiUrl = API_URL;
-        if (!apiUrl) {
-          console.error("VITE_API_URL is undefined. Check your .env file.");
-          return;
-        }
+if (!apiUrl) {
+  console.error("REACT_APP_API_URL is undefined. Check your .env file.");
+  return;
+}
 
-        console.log("Fetching counts from:", `${apiUrl}/api/counts`);
-        const response = await fetch(`${apiUrl}/api/counts`);
+const response = await fetch(`${apiUrl}/api/counts`);
+if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        console.log("Counts fetched successfully:", data);
-
-        setCounts({
-          books: parseInt(data.books) || 0,
-          authors: parseInt(data.authors) || 0,
-          borrowers: parseInt(data.borrowers) || 0,
-          booksWithBorrower: parseInt(data.booksWithBorrower) || 0,
-          borrowersWithoutBook: parseInt(data.borrowersWithoutBook) || 0,
-        });
-      } catch (error) {
+const data = await response.json();
+setCounts({
+  books: parseInt(data.books) || 0,
+  authors: parseInt(data.authors) || 0,
+  borrowers: parseInt(data.borrowers) || 0,
+  booksWithBorrower: parseInt(data.booksWithBorrower) || 0,
+  borrowersWithoutBook: parseInt(data.borrowersWithoutBook) || 0,
+});
+  } catch (error) {
         console.error("Error fetching counts:", error);
       }
     };

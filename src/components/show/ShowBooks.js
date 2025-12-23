@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import SearchBar from "../search_comp/SearchBar";
-import API_URL from "../config"; // adjust path
+import API_URL from "config";
+ // adjust path
 
 const ShowItemList = ({ items, openItems, toggleItem, type }) => {
   return (

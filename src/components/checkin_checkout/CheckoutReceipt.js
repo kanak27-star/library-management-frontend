@@ -1,7 +1,7 @@
 import React from 'react';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-import API_URL from "../config"; // adjust path
+import API_URL from "config"; // adjust path
 
 const CheckoutReceipt = ({ selectedBook, selectedBorrower }) => {
   const handleSaveAsPDF = () => {

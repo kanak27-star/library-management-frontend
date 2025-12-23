@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import API_URL from "../config.js"; // adjust path
+import API_URL from "config";
+ // adjust path
 
 const AddBook = ({ onBookAdded }) => {
   const [formData, setFormData] = useState({
@@ -31,30 +32,24 @@ const AddBook = ({ onBookAdded }) => {
       console.log('Form submitted:', JSON.stringify(formData));
 
       // Use Vite environment variable for backend URL
-      const apiUrl = API_URL;
+      const apiUrl = API_URL; // must be defined
 
-      const response = await fetch(`${apiUrl}/api/books`, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(formData),
-      });
+    const response = await fetch(`${apiUrl}/api/books`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    });
 
-      if (response.ok) {
-        alert('Book added successfully!');
-        console.log('Book added successfully!');
-        // Reset form
-        setFormData({
-          title: '',
-          authorName: '',
-          category: '',
-          price: '',
-        });
-        // Notify parent component
-        onBookAdded();
-      } else {
-        console.error('Failed to add book:', response.statusText);
-        alert('Failed to add book. Please try again.');
-      }
+    if (response.ok) {
+      alert('Book added successfully!');
+      setFormData({ title: '', authorName: '', category: '', price: '' });
+      onBookAdded();
+    } else {
+      const errorData = await response.json(); // optional: read backend error
+      console.error('Failed to add book:', errorData);
+      alert('Failed to add book. Check console.');
+    }
+
     } catch (error) {
       console.error('Error adding book:', error);
       alert('Error adding book. Check console for details.');

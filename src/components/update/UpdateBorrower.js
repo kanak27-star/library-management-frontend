@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SearchBar from '../search_comp/SearchBar';
 import ItemList from '../search_comp/ItemList';
-import API_URL from "../config"; // adjust path
+import API_URL from "config"; // adjust path
 
 const UpdateBorrower = () => {
   const [showBorrowerList, setShowBorrowerList] = useState(true);

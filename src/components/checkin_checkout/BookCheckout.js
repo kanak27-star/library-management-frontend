@@ -2,7 +2,7 @@ import React, {lazy,startTransition, useState } from 'react';
 // import CheckoutReceipt from './CheckoutReceipt';
 // import SearchBar from '../search_comp/SearchBar';
 // import ItemList from '../search_comp/ItemList';
-import API_URL from "../config"; // adjust path
+import API_URL from "config"; // adjust path
 
 const CheckoutReceipt = lazy(() => import('./CheckoutReceipt'));
 const SearchBar = lazy(() => import('../search_comp/SearchBar'));

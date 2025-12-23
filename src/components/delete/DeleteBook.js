@@ -1,5 +1,6 @@
 import React, { lazy, startTransition, useState } from "react";
-import API_URL from "../config"; // adjust path
+import API_URL from "config";
+ // adjust path
 
 const SearchBar = lazy(() => import("../search_comp/SearchBar"));
 const ItemList = lazy(() => import("../search_comp/ItemList"));
