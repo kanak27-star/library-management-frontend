@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import SearchBar from '../search_comp/SearchBar';
+import API_URL from "../config"; // adjust path
 
 const ShowItemList = ({ items, openItems, toggleItem }) => {
   return (
@@ -46,9 +47,9 @@ const ShowBorrowers = ({ type }) => {
     try {
       let response = null;
       if (type === 'all') {
-        response = await fetch(`${import.meta.env.VITE_API_URL}/borrowers/search?query=${query}`);
+        response = await fetch(`${API_URL}/borrowers/search?query=${query}`);
       } else if (type === 'withoutbooks') {
-        response = await fetch(`${import.meta.env.VITE_API_URL}/borrowers/searchdel?query=${query}`);
+        response = await fetch(`${API_URL}/borrowers/searchdel?query=${query}`);
       }
 
       const data = await response.json();

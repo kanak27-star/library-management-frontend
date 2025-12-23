@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import SearchBar from "../search_comp/SearchBar";
+import API_URL from "../config"; // adjust path
 
 const ShowItemList = ({ items, openItems, toggleItem, type }) => {
   return (
@@ -84,15 +85,15 @@ const ShowBooks = ({ type }) => {
         let response = null;
         if (type === "all") {
           response = await fetch(
-            `${import.meta.env.VITE_API_URL}/books/search?query=${query}`
+            `${API_URL}/books/search?query=${query}`
           );
         } else if (type === "borrowed") {
           response = await fetch(
-            `${import.meta.env.VITE_API_URL}/books/searchin?query=${query}`
+            `${API_URL}/books/searchin?query=${query}`
           );
         } else if (type === "available") {
           response = await fetch(
-            `${import.meta.env.VITE_API_URL}/books/searchout?query=${query}`
+            `${API_URL}/books/searchout?query=${query}`
           );
         }
 

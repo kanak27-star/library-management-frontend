@@ -1,4 +1,5 @@
 import React, { lazy, startTransition, useState } from "react";
+import API_URL from "../config"; // adjust path
 
 const SearchBar = lazy(() => import("../search_comp/SearchBar"));
 const ItemList = lazy(() => import("../search_comp/ItemList"));
@@ -16,7 +17,7 @@ const DeleteBook = ({ onBookDeleted }) => {
     price: "",
   });
 
-  const apiUrl = import.meta.env.VITE_API_URL; // Vite env variable for backend
+  const apiUrl = API_URL; // Vite env variable for backend
 
   // Search books
   const handleSearch = async (query) => {

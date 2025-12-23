@@ -1,4 +1,5 @@
 import React, {lazy,useState,startTransition } from "react";
+import API_URL from "../config"; // adjust path
 
 const SearchBar = lazy(() => import("../search_comp/SearchBar"));
 const ItemList = lazy(() => import("../search_comp/ItemList"));
@@ -19,7 +20,7 @@ const CheckinBook = () => {
   const handleSearch = async (query) => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/books/searchin?query=${query}`
+        `${API_URL}/books/searchin?query=${query}`
       );
       const data = await response.json();
       // console.log(data);
@@ -77,7 +78,7 @@ const CheckinBook = () => {
 
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/books/checkin`,
+          `${API_URL}/books/checkin`,
           {
             method: "PUT",
             headers: {

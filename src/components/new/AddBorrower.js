@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import API_URL from "../config"; // adjust path
 
 const AddBorrower = ({ onBorrowerAdded }) => {
   const [formData, setFormData] = useState({
@@ -27,7 +28,7 @@ const AddBorrower = ({ onBorrowerAdded }) => {
     }
 
     try {
-      const apiUrl = import.meta.env.VITE_API_URL; // Vite environment variable
+      const apiUrl = API_URL; // Vite environment variable
 
       const response = await fetch(`${apiUrl}/borrowers`, {
         method: 'POST',

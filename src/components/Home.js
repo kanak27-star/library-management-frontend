@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import API_URL from "../config"; // adjust path
 
 const Home = ({
   showBooks,
@@ -22,7 +23,7 @@ const Home = ({
     const fetchCounts = async () => {
       try {
         // Use Vite environment variable
-        const apiUrl = import.meta.env.VITE_API_URL;
+        const apiUrl = API_URL;
         if (!apiUrl) {
           console.error("VITE_API_URL is undefined. Check your .env file.");
           return;

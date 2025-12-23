@@ -2,6 +2,7 @@ import React, {lazy,startTransition, useState } from 'react';
 // import CheckoutReceipt from './CheckoutReceipt';
 // import SearchBar from '../search_comp/SearchBar';
 // import ItemList from '../search_comp/ItemList';
+import API_URL from "../config"; // adjust path
 
 const CheckoutReceipt = lazy(() => import('./CheckoutReceipt'));
 const SearchBar = lazy(() => import('../search_comp/SearchBar'));
@@ -21,7 +22,7 @@ const BookCheckout = () => {
 
   const handleBookSearch = async (query) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/books/searchout?query=${query}`);
+      const response = await fetch(`${API_URL}/books/searchout?query=${query}`);
       const data = await response.json();
       setBooks(data);
     } catch (error) {
@@ -32,7 +33,7 @@ const BookCheckout = () => {
 
   const handleBorrowerSearch = async (query) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/borrowers/search?query=${query}`);
+      const response = await fetch(`${API_URL}/borrowers/search?query=${query}`);
       const data = await response.json();
       setBorrowers(data);
     } catch (error) {
@@ -87,7 +88,7 @@ const BookCheckout = () => {
       const bookId = searchedBook._id;
       const borrowerId = searchedBorrower._id;
 
-      fetch(`${import.meta.env.VITE_API_URL}/books/checkout`, {
+      fetch(`${API_URL}/books/checkout`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

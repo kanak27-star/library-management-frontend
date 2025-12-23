@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SearchBar from '../search_comp/SearchBar';
 import ItemList from '../search_comp/ItemList';
+import API_URL from "../config"; // adjust path
 
 
 const UpdateBook = () => {
@@ -19,7 +20,7 @@ const UpdateBook = () => {
 
   const handleSearch = async (query) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/books/search?query=${query}`);
+      const response = await fetch(`${API_URL}/books/search?query=${query}`);
       const data = await response.json();
       setBooks(data);
     } catch (error) {
@@ -70,7 +71,7 @@ const UpdateBook = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/books`, {
+      const response = await fetch(`${API_URL}/books`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

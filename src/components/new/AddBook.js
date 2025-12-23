@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import API_URL from "../config"; // adjust path
 
 const AddBook = ({ onBookAdded }) => {
   const [formData, setFormData] = useState({
@@ -30,7 +31,7 @@ const AddBook = ({ onBookAdded }) => {
       console.log('Form submitted:', JSON.stringify(formData));
 
       // Use Vite environment variable for backend URL
-      const apiUrl = import.meta.env.VITE_API_URL;
+      const apiUrl = API_URL;
 
       const response = await fetch(`${apiUrl}/books`, {
         method: 'POST',

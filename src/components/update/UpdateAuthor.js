@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SearchBar from '../search_comp/SearchBar';
 import ItemList from '../search_comp/ItemList';
+import API_URL from "../config"; // adjust path
 
 const UpdateAuthor = () => {
   const [showAuthorList, setShowAuthorList] = useState(true);
@@ -17,7 +18,7 @@ const UpdateAuthor = () => {
   const handleSearch = async (query) => {
     try {
         // console.log('Query:', query);
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/authors/search?query=${query}`);
+        const response = await fetch(`${API_URL}/authors/search?query=${query}`);
         const data = await response.json();
         setAuthors(data);
     } 
@@ -55,7 +56,7 @@ const UpdateAuthor = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/authors/${selectedAuthor._id}`, {
+      const response = await fetch(`${API_URL}/authors/${selectedAuthor._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

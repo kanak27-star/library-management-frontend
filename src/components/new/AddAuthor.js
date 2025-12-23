@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import API_URL from "../config"; // adjust path
 
 const AddAuthor = ({ onAuthorAdded }) => {
   const [formData, setFormData] = useState({
@@ -37,7 +38,7 @@ const AddAuthor = ({ onAuthorAdded }) => {
     }
 
     try {
-      const apiUrl = import.meta.env.VITE_API_URL; // Vite environment variable
+      const apiUrl = API_URL; // Vite environment variable
 
       const response = await fetch(`${apiUrl}/authors`, {
         method: 'POST',
