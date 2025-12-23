@@ -1,5 +1,5 @@
 const API_URL =
-  import.meta.env?.VITE_API_URL ||
-  "https://library-management-backend.onrender.com";
+  process.env.REACT_APP_API_URL ||
+  "https://library-management-backend-c7mr.onrender.com";
 
 export default API_URL;

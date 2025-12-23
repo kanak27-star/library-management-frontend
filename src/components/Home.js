@@ -29,10 +29,8 @@ const Home = ({
           return;
         }
 
-        console.log("Fetching counts from:", `${apiUrl}/api/counts
-`);
-        const response = await fetch(`${apiUrl}/api/counts
-`);
+        console.log("Fetching counts from:", `${apiUrl}/api/counts`);
+        const response = await fetch(`${apiUrl}/api/counts`);
 
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
