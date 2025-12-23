@@ -50,9 +50,7 @@ const DeleteBorrower = ({ onBorrowerDeleted }) => {
         const response = await fetch(`${apiUrl}/api/borrowers
 /${selectedBorrower._id}`, {
           method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: {'Content-Type': 'application/json'},
         });
         if (response.ok) {
           alert('Borrower deleted successfully');

@@ -22,8 +22,7 @@ const DeleteBook = ({ onBookDeleted }) => {
   // Search books
   const handleSearch = async (query) => {
     try {
-      const response = await fetch(`${apiUrl}/api/books
-/searchout?query=${query}`);
+      const response = await fetch(`${apiUrl}/api/books/searchout?query=${query}`);
       const data = await response.json();
       setBooks(data);
     } catch (error) {
@@ -72,12 +71,9 @@ const DeleteBook = ({ onBookDeleted }) => {
       };
 
       try {
-        const response = await fetch(`${apiUrl}/api/books
-`, {
+        const response = await fetch(`${apiUrl}/api/books`, {
           method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: {"Content-Type": "application/json"},
           body: JSON.stringify(requestBody),
         });
         if (response.ok) {
