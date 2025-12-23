@@ -21,7 +21,7 @@ const BookCheckout = () => {
 
   const handleBookSearch = async (query) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URI}/books/searchout?query=${query}`);
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/books/searchout?query=${query}`);
       const data = await response.json();
       setBooks(data);
     } catch (error) {
@@ -32,7 +32,7 @@ const BookCheckout = () => {
 
   const handleBorrowerSearch = async (query) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URI}/borrowers/search?query=${query}`);
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/borrowers/search?query=${query}`);
       const data = await response.json();
       setBorrowers(data);
     } catch (error) {
@@ -87,7 +87,7 @@ const BookCheckout = () => {
       const bookId = searchedBook._id;
       const borrowerId = searchedBorrower._id;
 
-      fetch(`${process.env.REACT_APP_API_URI}/books/checkout`, {
+      fetch(`${import.meta.env.VITE_API_URL}/books/checkout`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

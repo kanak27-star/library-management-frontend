@@ -1,7 +1,4 @@
 import React, { lazy, startTransition, useState } from "react";
-// import SearchBar from "../search_comp/SearchBar";
-// import ItemList from "../search_comp/ItemList";
-// import FormComp from "../search_comp/FormComp";
 
 const SearchBar = lazy(() => import("../search_comp/SearchBar"));
 const ItemList = lazy(() => import("../search_comp/ItemList"));
@@ -19,11 +16,12 @@ const DeleteBook = ({ onBookDeleted }) => {
     price: "",
   });
 
+  const apiUrl = import.meta.env.VITE_API_URL; // Vite env variable for backend
+
+  // Search books
   const handleSearch = async (query) => {
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URI}/books/searchout?query=${query}`
-      );
+      const response = await fetch(`${apiUrl}/books/searchout?query=${query}`);
       const data = await response.json();
       setBooks(data);
     } catch (error) {
@@ -32,19 +30,21 @@ const DeleteBook = ({ onBookDeleted }) => {
     }
   };
 
+  // Select a book
   const handleSelectBook = async (book) => {
     startTransition(() => {
       setSelectedBook(book);
       setShowBookList(false);
       setFormData({
         title: book.title,
-        authorName: book?.author.authorName || "",
+        authorName: book?.author?.authorName || "",
         category: book.category || "",
         price: book.price ? book.price.toString() : "",
       });
     });
   };
 
+  // Reset form
   const handleReset = () => {
     startTransition(() => {
       setFormData({
@@ -60,17 +60,17 @@ const DeleteBook = ({ onBookDeleted }) => {
     });
   };
 
+  // Delete book
   const handleDelete = async () => {
     if (confirmDelete === "delete" && selectedBook) {
       const { _id: bookId, author } = selectedBook;
-
       const requestBody = {
         bookId,
         authorId: author._id,
       };
 
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URI}/books`, {
+        const response = await fetch(`${apiUrl}/books`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
@@ -85,9 +85,13 @@ const DeleteBook = ({ onBookDeleted }) => {
           setBooks([]);
           handleReset();
           onBookDeleted();
+        } else {
+          console.error("Failed to delete book:", response.statusText);
+          alert("Failed to delete book. Please try again.");
         }
       } catch (error) {
         console.error("Error deleting book:", error);
+        alert("Error deleting book. Check console for details.");
       }
     } else {
       alert('Please type "delete" in the confirmation box to delete the book.');
@@ -113,10 +117,11 @@ const DeleteBook = ({ onBookDeleted }) => {
         </>
       ) : (
         <>
-          <FormComp 
+          <FormComp
             form_data={formData}
             setConfirm={setConfirmDelete}
-            type="deletebook" />
+            type="deletebook"
+          />
           <div className="mt-2">
             <button
               onClick={handleReset}

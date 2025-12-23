@@ -19,7 +19,7 @@ const CheckinBook = () => {
   const handleSearch = async (query) => {
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_URI}/books/searchin?query=${query}`
+        `${import.meta.env.VITE_API_URL}/books/searchin?query=${query}`
       );
       const data = await response.json();
       // console.log(data);
@@ -77,7 +77,7 @@ const CheckinBook = () => {
 
       try {
         const response = await fetch(
-          `${process.env.REACT_APP_API_URI}/books/checkin`,
+          `${import.meta.env.VITE_API_URL}/books/checkin`,
           {
             method: "PUT",
             headers: {

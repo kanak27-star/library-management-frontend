@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
-const Home = ({showBooks,showAuthors,showBorrowers,showBorrowersWithoutBook,showCheckoutBooks,showRemainingBooks}) => {
+const Home = ({
+  showBooks,
+  showAuthors,
+  showBorrowers,
+  showBorrowersWithoutBook,
+  showCheckoutBooks,
+  showRemainingBooks,
+}) => {
   const [counts, setCounts] = useState({
     books: 0,
     authors: 0,
@@ -14,10 +21,13 @@ const Home = ({showBooks,showAuthors,showBorrowers,showBorrowersWithoutBook,show
     const fetchCounts = async () => {
       try {
         console.log('Fetching counts...');
-        const response = await fetch(`${process.env.REACT_APP_API_URI}/counts`);
+        const apiUrl = import.meta.env.VITE_API_URL; // Use Vite env variable
+        const response = await fetch(`${apiUrl}/counts`);
+
         if (response.ok) {
           const data = await response.json();
           console.log('Counts fetched successfully:', data);
+
           const parsedData = {
             books: parseInt(data.books) || 0,
             authors: parseInt(data.authors) || 0,
@@ -43,7 +53,11 @@ const Home = ({showBooks,showAuthors,showBorrowers,showBorrowersWithoutBook,show
   };
 
   const Card = ({ children }) => {
-    return <div className="bg-gray-900 rounded-lg justify-center shadow-md px-4 py-4 mb-1 max-w-xl">{children}</div>;
+    return (
+      <div className="bg-gray-900 rounded-lg justify-center shadow-md px-4 py-4 mb-1 max-w-xl">
+        {children}
+      </div>
+    );
   };
 
   const StatCard = ({ title, count, onClickHandle }) => {
@@ -58,33 +72,66 @@ const Home = ({showBooks,showAuthors,showBorrowers,showBorrowersWithoutBook,show
       </div>
     );
   };
-  
 
   return (
-    <div className=" justify-center p-8">
+    <div className="justify-center p-8">
       <Card>
-        <h1 className=" font-bold text-center mb-6">Welcome to the Library Management System</h1>
-        <p className=" text-center">This is a simple library management system where</p>
-        <p className=" text-center"> you can add, update, and delete books and borrowers.</p>
+        <h1 className="font-bold text-center mb-6">
+          Welcome to the Library Management System
+        </h1>
+        <p className="text-center">
+          This is a simple library management system where
+        </p>
+        <p className="text-center">
+          you can add, update, and delete books and borrowers.
+        </p>
         <h2 className="font-bold text-center mt-8">-:Status:-</h2>
       </Card>
 
       <div className="flex justify-center mt-2">
         <div className="grid grid-cols-2 gap-4">
           <Card>
-            <StatCard title="Total Books" onClickHandle={showBooks} count={counts.books} />
-            <StatCard title="Total Authors" onClickHandle={showAuthors} count={counts.authors} />
-            <StatCard title="Total Borrowers" onClickHandle={showBorrowers} count={counts.borrowers} />
+            <StatCard
+              title="Total Books"
+              onClickHandle={showBooks}
+              count={counts.books}
+            />
+            <StatCard
+              title="Total Authors"
+              onClickHandle={showAuthors}
+              count={counts.authors}
+            />
+            <StatCard
+              title="Total Borrowers"
+              onClickHandle={showBorrowers}
+              count={counts.borrowers}
+            />
           </Card>
           <Card>
-            <StatCard title="Checked Out Books" onClickHandle={showCheckoutBooks} count={counts.booksWithBorrower} />
-            <StatCard title="Borrowers without Books" onClickHandle={showBorrowersWithoutBook} count={counts.borrowersWithoutBook} />
-            <StatCard title="Remaining Books" onClickHandle={showRemainingBooks} count={parseInt(counts.books) - parseInt(counts.booksWithBorrower)} />
+            <StatCard
+              title="Checked Out Books"
+              onClickHandle={showCheckoutBooks}
+              count={counts.booksWithBorrower}
+            />
+            <StatCard
+              title="Borrowers without Books"
+              onClickHandle={showBorrowersWithoutBook}
+              count={counts.borrowersWithoutBook}
+            />
+            <StatCard
+              title="Remaining Books"
+              onClickHandle={showRemainingBooks}
+              count={Math.max(0, counts.books - counts.booksWithBorrower)}
+            />
           </Card>
         </div>
       </div>
+
       <div className="flex justify-center">
-        <button onClick={triggerUpdate} className="mt-8 bg-gray-700 ring-1 ring-gray-500 hover:bg-gray-600 hover:ring-gray-700 text-gray-300 py-1 px-2 rounded-lg">
+        <button
+          onClick={triggerUpdate}
+          className="mt-8 bg-gray-700 ring-1 ring-gray-500 hover:bg-gray-600 hover:ring-gray-700 text-gray-300 py-1 px-2 rounded-lg"
+        >
           Force Refresh Counts
         </button>
       </div>

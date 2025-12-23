@@ -46,7 +46,7 @@ const ShowAuthors = () => {
 
   const handleSearch = useCallback(async (query) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URI}/authors/search?query=${query}`);
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/authors/search?query=${query}`);
       const data = await response.json();
       startTransition(() => {
         setAuthors(data);

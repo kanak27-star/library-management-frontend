@@ -8,6 +8,7 @@ const AddAuthor = ({ onAuthorAdded }) => {
     books: [],
   });
 
+  // Handle input changes for text fields
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -16,19 +17,17 @@ const AddAuthor = ({ onAuthorAdded }) => {
     }));
   };
 
+  // Handle comma-separated books input
   const handleChangeBooks = (e) => {
     const { value } = e.target;
-    const booksArray = value.split(',');
-    // Pass an empty array to the formData state
+    const booksArray = value.split(',').map((book) => book.trim()).filter(Boolean);
     setFormData((prevData) => ({
       ...prevData,
-      books: booksArray
+      books: booksArray,
     }));
-  
   };
-  
-  
 
+  // Handle form submission
   const handleAddAuthor = async (e) => {
     e.preventDefault();
 
@@ -38,7 +37,9 @@ const AddAuthor = ({ onAuthorAdded }) => {
     }
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URI}/authors`, {
+      const apiUrl = import.meta.env.VITE_API_URL; // Vite environment variable
+
+      const response = await fetch(`${apiUrl}/authors`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -53,14 +54,16 @@ const AddAuthor = ({ onAuthorAdded }) => {
           authorName: '',
           authorEmail: '',
           authorPhone: '',
-          books: []
+          books: [],
         });
         onAuthorAdded();
       } else {
         console.error('Failed to add Author:', response.statusText);
+        alert('Failed to add author. Please try again.');
       }
     } catch (error) {
       console.error('Error adding Author:', error);
+      alert('Error adding author. Check console for details.');
     }
   };
 
@@ -69,60 +72,64 @@ const AddAuthor = ({ onAuthorAdded }) => {
       <h1 className="text-2xl font-bold text-center mb-6">Add Author</h1>
       <form onSubmit={handleAddAuthor} className="bg-gray-700 w-screen max-w-md rounded-lg p-4">
         <div className="mb-6">
-          <label align='left' htmlFor="author_name" className="block">Name</label>
+          <label htmlFor="author_name" className="block">Name</label>
           <input
             type="text"
             name="authorName"
             id="author_name"
             placeholder="Author's Name"
-            className="border bg-gray-200 text-gray-500 border-gray-300 rounded-lg p-2 w-full max-w-md"
+            required
+            className="border bg-gray-200 text-gray-500 border-gray-300 rounded-lg p-2 w-full"
             value={formData.authorName}
             onChange={handleChange}
           />
         </div>
+
         <div className="mb-6">
-          <label align='left' htmlFor="author_email" className="block">Email</label>
+          <label htmlFor="author_email" className="block">Email</label>
           <input
             type="email"
             name="authorEmail"
             id="author_email"
-            placeholder="author's Email"
+            placeholder="Author's Email"
             className="border bg-gray-200 text-gray-500 border-gray-300 rounded-lg p-2 w-full"
             value={formData.authorEmail}
             onChange={handleChange}
           />
         </div>
+
         <div className="mb-6">
-          <label align='left' htmlFor="author_phone" className="block">Phone No</label>
+          <label htmlFor="author_phone" className="block">Phone No</label>
           <input
             type="tel"
             name="authorPhone"
             id="author_phone"
-            placeholder="author's Phone No"
+            placeholder="Author's Phone No"
             className="border bg-gray-200 text-gray-500 border-gray-300 rounded-lg p-2 w-full"
             value={formData.authorPhone}
             onChange={handleChange}
           />
         </div>
+
         <div className="mb-6">
-          <label align='left' htmlFor="books" className="block">Books (Comma-separated)</label>
+          <label htmlFor="books" className="block">Books (Comma-separated)</label>
           <input
             type="text"
             name="books"
             id="books"
             placeholder="Book names comma separated"
             className="border bg-gray-200 text-gray-500 border-gray-300 rounded-lg p-2 w-full"
-            value={formData.books}
+            value={formData.books.join(', ')}
             onChange={handleChangeBooks}
           />
+        </div>
 
-        </div>
-        
-        <div className="mt-6">
-          <button type="submit" className="bg-blue-700 text-white py-3 w-full rounded font-semibold hover:bg-blue-600 focus:ring-4 focus:ring-blue-500">
-            Add Author
-          </button>
-        </div>
+        <button
+          type="submit"
+          className="bg-blue-700 text-white py-3 w-full rounded font-semibold hover:bg-blue-600 focus:ring-4 focus:ring-blue-500"
+        >
+          Add Author
+        </button>
       </form>
     </div>
   );

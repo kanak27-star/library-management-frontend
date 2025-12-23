@@ -19,7 +19,7 @@ const UpdateBook = () => {
 
   const handleSearch = async (query) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URI}/books/search?query=${query}`);
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/books/search?query=${query}`);
       const data = await response.json();
       setBooks(data);
     } catch (error) {
@@ -70,7 +70,7 @@ const UpdateBook = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URI}/books`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/books`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

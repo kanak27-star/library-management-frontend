@@ -46,9 +46,9 @@ const ShowBorrowers = ({ type }) => {
     try {
       let response = null;
       if (type === 'all') {
-        response = await fetch(`${process.env.REACT_APP_API_URI}/borrowers/search?query=${query}`);
+        response = await fetch(`${import.meta.env.VITE_API_URL}/borrowers/search?query=${query}`);
       } else if (type === 'withoutbooks') {
-        response = await fetch(`${process.env.REACT_APP_API_URI}/borrowers/searchdel?query=${query}`);
+        response = await fetch(`${import.meta.env.VITE_API_URL}/borrowers/searchdel?query=${query}`);
       }
 
       const data = await response.json();

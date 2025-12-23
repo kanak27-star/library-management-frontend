@@ -84,15 +84,15 @@ const ShowBooks = ({ type }) => {
         let response = null;
         if (type === "all") {
           response = await fetch(
-            `${process.env.REACT_APP_API_URI}/books/search?query=${query}`
+            `${import.meta.env.VITE_API_URL}/books/search?query=${query}`
           );
         } else if (type === "borrowed") {
           response = await fetch(
-            `${process.env.REACT_APP_API_URI}/books/searchin?query=${query}`
+            `${import.meta.env.VITE_API_URL}/books/searchin?query=${query}`
           );
         } else if (type === "available") {
           response = await fetch(
-            `${process.env.REACT_APP_API_URI}/books/searchout?query=${query}`
+            `${import.meta.env.VITE_API_URL}/books/searchout?query=${query}`
           );
         }
 

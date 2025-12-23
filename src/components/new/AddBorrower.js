@@ -8,6 +8,7 @@ const AddBorrower = ({ onBorrowerAdded }) => {
     borrowerAddress: '',
   });
 
+  // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -16,6 +17,7 @@ const AddBorrower = ({ onBorrowerAdded }) => {
     }));
   };
 
+  // Handle form submission
   const handleAddBorrower = async (e) => {
     e.preventDefault();
 
@@ -25,7 +27,9 @@ const AddBorrower = ({ onBorrowerAdded }) => {
     }
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URI}/borrowers`, {
+      const apiUrl = import.meta.env.VITE_API_URL; // Vite environment variable
+
+      const response = await fetch(`${apiUrl}/borrowers`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -36,7 +40,6 @@ const AddBorrower = ({ onBorrowerAdded }) => {
       if (response.ok) {
         alert('Borrower added successfully!');
         console.log('Borrower added successfully!');
-        // Clear form data after successful submission if needed
         setFormData({
           borrowerName: '',
           borrowerEmail: '',
@@ -46,9 +49,11 @@ const AddBorrower = ({ onBorrowerAdded }) => {
         onBorrowerAdded();
       } else {
         console.error('Failed to add borrower:', response.statusText);
+        alert('Failed to add borrower. Please try again.');
       }
     } catch (error) {
       console.error('Error adding borrower:', error);
+      alert('Error adding borrower. Check console for details.');
     }
   };
 
@@ -63,11 +68,13 @@ const AddBorrower = ({ onBorrowerAdded }) => {
             name="borrowerName"
             id="borrower_name"
             placeholder="Borrower's Name"
+            required
             className="border bg-gray-200 text-gray-500 border-gray-300 rounded-lg p-3 w-full"
             value={formData.borrowerName}
             onChange={handleChange}
           />
         </div>
+
         <div className="mb-6">
           <label htmlFor="borrower_email" className="block">Email</label>
           <input
@@ -80,6 +87,7 @@ const AddBorrower = ({ onBorrowerAdded }) => {
             onChange={handleChange}
           />
         </div>
+
         <div className="mb-6">
           <label htmlFor="borrower_phone" className="block">Phone No</label>
           <input
@@ -92,6 +100,7 @@ const AddBorrower = ({ onBorrowerAdded }) => {
             onChange={handleChange}
           />
         </div>
+
         <div className="mb-6">
           <label htmlFor="borrower_address" className="block">Address</label>
           <input
@@ -104,11 +113,13 @@ const AddBorrower = ({ onBorrowerAdded }) => {
             onChange={handleChange}
           />
         </div>
-        <div className="mt-6">
-          <button type="submit" className="bg-blue-700 text-white py-3 w-full rounded font-semibold hover:bg-blue-600 focus:ring-4 focus:ring-blue-500">
-            Add Borrower
-          </button>
-        </div>
+
+        <button
+          type="submit"
+          className="bg-blue-700 text-white py-3 w-full rounded font-semibold hover:bg-blue-600 focus:ring-4 focus:ring-blue-500"
+        >
+          Add Borrower
+        </button>
       </form>
     </div>
   );
